@@ -111,7 +111,7 @@ Um desenvolvedor quer editar a descrição longa de uma issue usando seu editor 
 
 ### Requisitos Funcionais
 
-- **RF-001**: `jira assign <KEY>` DEVE atribuir ao usuário autenticado por padrão; `--user <USERNAME>` DEVE atribuir a outro usuário
+- **RF-001**: `jira assign <KEY>` DEVE atribuir ao usuário autenticado por padrão; `--user <USERNAME>` DEVE atribuir a outro usuário; `--quiet` DEVE imprimir apenas a Key no stdout (compatível com pipelines — ver spec 001 RF-010)
 - **RF-002**: `jira unassign <KEY>` DEVE remover o responsável (definir assignee como nulo)
 - **RF-003**: `jira prio <KEY> <PRIORIDADE>` DEVE atualizar o campo `priority.name` da issue
 - **RF-004**: `jira summary <KEY> "<TITULO>"` DEVE atualizar o campo `summary` da issue
