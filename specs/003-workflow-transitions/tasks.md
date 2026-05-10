@@ -147,8 +147,8 @@ Implementação espelha US1 trocando `getPattern('start')` por `getPattern('done
 
 - [X] T021 [P] Atualizar `README.md` adicionando seção dos 5 comandos novos com exemplos e env vars `JIRA_PATTERN_*`
 - [X] T022 Rodar `npm run lint && npm run typecheck && npm run test && npm run build` localmente — TODOS devem passar
-- [ ] T023 Executar V1..V13 de `quickstart.md` em terminal real contra Jira (incluindo V3 com env override e V6 com workflow ambíguo)
-- [ ] T024 Push branch `003-workflow-transitions` + abrir PR para `master` + verificar workflow CI verde
+- [X] T023 Executar V1..V13 de `quickstart.md` em terminal real contra Jira (incluindo V3 com env override e V6 com workflow ambíguo)
+- [X] T024 Push branch `003-workflow-transitions` + abrir PR para `master` + verificar workflow CI verde
 - [X] T025 Avaliar `npx vitest run --coverage` — meta 80% nos novos módulos: `src/jira/patterns.ts`, `src/jira/transitions.ts`, `src/commands/{start,done,stop,trans,move}.ts`
 
 ---
