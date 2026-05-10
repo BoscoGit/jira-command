@@ -1,16 +1,14 @@
 import { spawn } from 'node:child_process';
 import { JiraError } from '../errors.js';
 
-interface SpawnFn {
-  (
-    command: string,
-    args: string[],
-    options: { detached: boolean; stdio: 'ignore' },
-  ): {
-    unref: () => void;
-    on: (event: 'error', listener: (err: NodeJS.ErrnoException) => void) => void;
-  };
-}
+type SpawnFn = (
+  command: string,
+  args: string[],
+  options: { detached: boolean; stdio: 'ignore' },
+) => {
+  unref: () => void;
+  on: (event: 'error', listener: (err: NodeJS.ErrnoException) => void) => void;
+};
 
 let spawnImpl: SpawnFn = spawn as unknown as SpawnFn;
 
