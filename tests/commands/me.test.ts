@@ -65,6 +65,22 @@ describe('jira me', () => {
     expect(out).toContain('Key       : JIRAUSER123');
   });
 
+  it('NÃO imprime help/usage após subcomando bem-sucedido (regressão)', async () => {
+    fetchMock.mockResolvedValueOnce(
+      new Response(JSON.stringify(ME_PAYLOAD), {
+        status: 200,
+        headers: { 'content-type': 'application/json' },
+      }),
+    );
+    const code = await runRootSafe(['me']);
+    expect(code).toBe(0);
+    const combined = stdoutText() + stderrText();
+    expect(combined).toContain('Logado como');
+    expect(combined).not.toContain('USAGE');
+    expect(combined).not.toContain('OPTIONS');
+    expect(combined).not.toContain('COMMANDS');
+  });
+
   it('com --json emite JSON único e nada de decorativo', async () => {
     fetchMock.mockResolvedValueOnce(
       new Response(JSON.stringify(ME_PAYLOAD), {

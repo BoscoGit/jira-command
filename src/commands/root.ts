@@ -25,10 +25,9 @@ export const rootCommand = defineCommand({
       json: Boolean(args.json),
     });
   },
-  async run({ cmd }) {
-    // Sem subcomando: mostra help (RF-005). --help/--version já são interceptados por citty.
-    await showUsage(cmd);
-  },
+  // Sem `run` no root: citty dispatcha exclusivamente para o subcomando casado.
+  // Caso "sem args" (RF-005) é tratado em runRootSafe ANTES de chamar runCommand
+  // — evita que showUsage seja invocado depois de um subcomando bem-sucedido.
   subCommands: {
     me: meCommand,
   },
@@ -72,14 +71,17 @@ export async function runRootSafe(rawArgs: string[]): Promise<number> {
     return 0;
   }
 
-  // Detecta subcomando desconhecido ANTES de citty processar (RF-005, H3 critério 3).
-  // citty reportaria "Unknown command X" e exit 1 — queremos mensagem específica e exit 2.
+  // Sem positional → mostra usage (RF-005). Tratado AQUI (não em root.run) para
+  // evitar duplo print quando subcomando válido também causaria root.run a rodar.
   const firstPositional = filteredArgs.find((a) => !a.startsWith('-'));
-  if (
-    firstPositional !== undefined &&
-    rootCommand.subCommands &&
-    !(firstPositional in rootCommand.subCommands)
-  ) {
+  if (firstPositional === undefined) {
+    await showUsage(rootCommand);
+    return 0;
+  }
+
+  // Subcomando desconhecido (RF-005, H3 critério 3): citty reportaria "Unknown
+  // command X" e exit 1 — queremos mensagem específica e exit 2.
+  if (rootCommand.subCommands && !(firstPositional in rootCommand.subCommands)) {
     humanError(
       `Comando desconhecido '${firstPositional}'. Execute 'jira --help' para ver os comandos disponíveis.`,
     );

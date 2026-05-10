@@ -191,7 +191,7 @@ Para a 001, entregamos a infraestrutura de stdin (`stdin.ts` em T012) + helper d
 - [X] T046 Rodar `npm run lint && npm run typecheck && npm run test && npm run build` localmente — TODOS devem passar
 - [ ] T047 Rodar `npm link` e percorrer todos os 13 passos de `quickstart.md` em terminal real
 - [ ] T048 Confirmar User-Agent (`jira-cli/<VERSION> (Node/<v22>)`) em uma requisição real, observando logs do servidor Jira ou via proxy de inspeção (V11)
-- [ ] T049 Push da branch `001-cli-foundation` e abrir PR para verificar workflow `.github/workflows/ci.yml` rodando verde
+- [X] T049 Push da branch `001-cli-foundation` e abrir PR para verificar workflow `.github/workflows/ci.yml` rodando verde
 - [X] T050 [P] Criar `tests/signal.test.ts` cobrindo a função pura `handleSigint`: (a) chama `controller.abort()` deixando `getSignal().aborted === true`, (b) remove tmp files registrados via `registerTmpFile` (criar arquivo real em `os.tmpdir()`, registrar, chamar `handleSigint`, asserter inexistência), (c) ignora silenciosamente arquivos já removidos (`fs.rmSync` com `force: true`), (d) RETORNA exatamente `130`. Não testar `installSigintHandler` (efeito colateral em `process.on`) — apenas a função pura
 - [X] T051 Avaliar cobertura de testes via `npx vitest run --coverage` — meta mínima 80% nos módulos de `src/` (config, http, errors, output, stdin, signal, version, commands/root, commands/me)
 
