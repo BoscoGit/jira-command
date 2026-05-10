@@ -158,7 +158,7 @@ description: "Task list for 004 — Atribuição e Edição de Campos (jira-comm
 - [X] T026 [P] Atualizar `README.md` adicionando seção da feature 004 com 7 comandos novos, env vars `EDITOR`/`VISUAL`, exemplos
 - [X] T027 Rodar `npm run lint && npm run typecheck && npm run test && npm run build` localmente — TODOS verdes
 - [ ] T028 Executar V1..V13 do `quickstart.md` em terminal real contra Jira (incluindo V8 sem mudança, V9 desc em pipe, V10 editor com erro)
-- [ ] T029 Push branch `004-assignment-editing` + abrir PR para `master` + verificar workflow CI verde
+- [X] T029 Push branch `004-assignment-editing` + abrir PR para `master` + verificar workflow CI verde
 - [X] T030 Avaliar `npx vitest run --coverage` — meta 80% nos novos módulos: `src/jira/edit.ts`, `src/platform/editor.ts`, `src/commands/{assign,unassign,prio,summary,label,label-del,desc}.ts`
 
 ---
