@@ -12,20 +12,27 @@ import { findCommand } from './find.js';
 import { getCommand } from './get.js';
 import { labelCommand } from './label.js';
 import { labelDelCommand } from './label-del.js';
+import { linkCommand } from './link.js';
+import { linksCommand } from './links.js';
 import { logCommand } from './log.js';
 import { logsCommand } from './logs.js';
 import { meCommand } from './me.js';
 import { mineCommand } from './mine.js';
 import { moveCommand } from './move.js';
+import { newCommand } from './new.js';
 import { openCommand } from './open.js';
 import { pickCommand } from './pick.js';
 import { prioCommand } from './prio.js';
+import { projectsCommand } from './projects.js';
 import { startCommand } from './start.js';
 import { statusCommand } from './status.js';
 import { stopCommand } from './stop.js';
+import { subCommand } from './sub.js';
+import { subsCommand } from './subs.js';
 import { summaryCommand } from './summary.js';
 import { transCommand } from './trans.js';
 import { unassignCommand } from './unassign.js';
+import { usersCommand } from './users.js';
 
 export const rootCommand = defineCommand({
   meta: {
@@ -76,6 +83,13 @@ export const rootCommand = defineCommand({
     'comment-del': commentDelCommand,
     log: logCommand,
     logs: logsCommand,
+    new: newCommand,
+    sub: subCommand,
+    subs: subsCommand,
+    link: linkCommand,
+    links: linksCommand,
+    projects: projectsCommand,
+    users: usersCommand,
   },
 });
 
