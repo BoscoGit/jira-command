@@ -10,6 +10,8 @@ A feature **003 (Transições de Workflow)** entrega cinco comandos: `trans`, `s
 
 A feature **004 (Atribuição e Edição)** entrega sete comandos: `assign`, `unassign`, `prio`, `summary`, `label`, `label-del`, `desc`.
 
+A feature **005 (Comentários e Worklog)** entrega cinco comandos: `comment`, `comments`, `comment-del`, `log`, `logs`.
+
 ## Requisitos
 
 - Node 22 LTS (recursos usados rodam em Node 20+, mas `engines` declara `>=22`).
@@ -110,6 +112,21 @@ jira pick | jira assign --quiet | jira start # pipeline ergonômico
 ```
 
 `jira desc` exige terminal interativo — em pipe falha com exit 2. Editor escolhido em ordem: `$EDITOR` → `$VISUAL` → `notepad.exe` (Windows) → `nano` com fallback `vi` (Linux/macOS). Sem mudança no editor → não envia PUT.
+
+### Comentários e worklog (feature 005)
+
+```powershell
+jira comment ABC-123 "PR enviado para revisão"   # adiciona comentário
+jira comments ABC-123                            # lista 50 mais recentes
+jira comment-del ABC-123 12345                   # confirma com (s/n) antes
+jira comment-del ABC-123 12345 --yes             # bypass do prompt
+jira log ABC-123 "1h 30m"                        # registra worklog
+jira log ABC-123 "45m" "investigação do bug"     # com descrição
+jira logs ABC-123                                # lista todos os apontamentos
+echo ABC-1 | jira log "1h"                       # pipe stdin
+```
+
+`jira comment-del` em pipe (CI/script) exige `--yes` — sem, recusa com exit 2 por segurança. Formatos de tempo aceitos: `1h`, `30m`, `1h 30m` (com espaço); erros são repassados do servidor.
 
 ## Pipeline
 

@@ -3,12 +3,17 @@ import { JiraError } from '../errors.js';
 import { getOutputMode, humanError, jsonOut, setOutputMode } from '../output.js';
 import { VERSION } from '../version.js';
 import { assignCommand } from './assign.js';
+import { commentCommand } from './comment.js';
+import { commentDelCommand } from './comment-del.js';
+import { commentsCommand } from './comments.js';
 import { descCommand } from './desc.js';
 import { doneCommand } from './done.js';
 import { findCommand } from './find.js';
 import { getCommand } from './get.js';
 import { labelCommand } from './label.js';
 import { labelDelCommand } from './label-del.js';
+import { logCommand } from './log.js';
+import { logsCommand } from './logs.js';
 import { meCommand } from './me.js';
 import { mineCommand } from './mine.js';
 import { moveCommand } from './move.js';
@@ -66,6 +71,11 @@ export const rootCommand = defineCommand({
     label: labelCommand,
     'label-del': labelDelCommand,
     desc: descCommand,
+    comment: commentCommand,
+    comments: commentsCommand,
+    'comment-del': commentDelCommand,
+    log: logCommand,
+    logs: logsCommand,
   },
 });
 
