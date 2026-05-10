@@ -2,18 +2,25 @@ import { defineCommand, runCommand, showUsage } from 'citty';
 import { JiraError } from '../errors.js';
 import { getOutputMode, humanError, jsonOut, setOutputMode } from '../output.js';
 import { VERSION } from '../version.js';
+import { assignCommand } from './assign.js';
+import { descCommand } from './desc.js';
 import { doneCommand } from './done.js';
 import { findCommand } from './find.js';
 import { getCommand } from './get.js';
+import { labelCommand } from './label.js';
+import { labelDelCommand } from './label-del.js';
 import { meCommand } from './me.js';
 import { mineCommand } from './mine.js';
 import { moveCommand } from './move.js';
 import { openCommand } from './open.js';
 import { pickCommand } from './pick.js';
+import { prioCommand } from './prio.js';
 import { startCommand } from './start.js';
 import { statusCommand } from './status.js';
 import { stopCommand } from './stop.js';
+import { summaryCommand } from './summary.js';
 import { transCommand } from './trans.js';
+import { unassignCommand } from './unassign.js';
 
 export const rootCommand = defineCommand({
   meta: {
@@ -52,6 +59,13 @@ export const rootCommand = defineCommand({
     done: doneCommand,
     stop: stopCommand,
     move: moveCommand,
+    assign: assignCommand,
+    unassign: unassignCommand,
+    prio: prioCommand,
+    summary: summaryCommand,
+    label: labelCommand,
+    'label-del': labelDelCommand,
+    desc: descCommand,
   },
 });
 
