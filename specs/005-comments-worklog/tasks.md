@@ -140,7 +140,7 @@ description: "Task list for 005 — Comentários e Registro de Tempo (jira-comma
 - [X] T025 [P] Atualizar `README.md` com seção feature 005, exemplos dos 5 comandos, observação sobre `--yes`
 - [X] T026 Rodar `npm run lint && npm run typecheck && npm run test && npm run build` — todos verdes
 - [ ] T027 Executar V1..V13 de `quickstart.md` em terminal real (incluindo V4/V5/V6 confirm interativo)
-- [ ] T028 Push branch + abrir PR + verificar CI verde
+- [X] T028 Push branch + abrir PR + verificar CI verde
 - [X] T029 Avaliar `npx vitest run --coverage` — meta 80% nos novos módulos: `src/format/preview.ts`, `src/jira/comments.ts`, `src/jira/worklog.ts`, `src/platform/prompt.ts`, `src/commands/{comment,comments,comment-del,log,logs}.ts`
 
 ---
