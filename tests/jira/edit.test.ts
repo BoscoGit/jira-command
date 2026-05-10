@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import type { Config } from '../../src/config.js';
-import { JiraError } from '../../src/errors.js';
+import type { JiraError } from '../../src/errors.js';
 import { resetHttpStateForTests } from '../../src/http.js';
 import {
   addLabel,

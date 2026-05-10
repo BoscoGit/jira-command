@@ -12,6 +12,8 @@ A feature **004 (Atribuição e Edição)** entrega sete comandos: `assign`, `un
 
 A feature **005 (Comentários e Worklog)** entrega cinco comandos: `comment`, `comments`, `comment-del`, `log`, `logs`.
 
+A feature **006 (Criação e Gerenciamento)** entrega sete comandos: `new`, `sub`, `subs`, `link`, `links`, `projects`, `users`. Última feature do MVP — fecha o port do `jira.ps1`.
+
 ## Requisitos
 
 - Node 22 LTS (recursos usados rodam em Node 20+, mas `engines` declara `>=22`).
@@ -127,6 +129,25 @@ echo ABC-1 | jira log "1h"                       # pipe stdin
 ```
 
 `jira comment-del` em pipe (CI/script) exige `--yes` — sem, recusa com exit 2 por segurança. Formatos de tempo aceitos: `1h`, `30m`, `1h 30m` (com espaço); erros são repassados do servidor.
+
+### Criação e gerenciamento (feature 006)
+
+```powershell
+jira new --project ABC --summary "Bug no login"                  # cria issue (Task default)
+jira new --project ABC --summary "Crítico" --type Bug            # tipo customizado
+jira new --project ABC --summary "X" --quiet | jira assign       # pipeline
+jira sub --parent ABC-123 --summary "Implementar handler"        # herda projeto
+jira sub --parent ABC-123 --summary "PT-BR" --type Subtarefa
+jira subs ABC-123                                                # lista subtasks
+jira link --from ABC-1 --type Blocks --to ABC-2                  # cria link
+jira links ABC-123                                               # lista links (-> outward, <- inward)
+jira projects                                                    # projetos do usuário (com contagem)
+jira projects --all                                              # todos os projetos visíveis
+jira users MTET                                                  # varredura a-z (26 chamadas paralelas)
+jira users MTET --filter silva                                   # filter (1 chamada, <3s)
+```
+
+`--quiet` em `new`/`sub` emite só a Key em stdout — habilita `jira new ... --quiet | jira assign`. `jira projects` (sem `--all`) avisa quando JQL trunca em 500 issues.
 
 ## Pipeline
 

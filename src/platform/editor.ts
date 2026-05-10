@@ -6,18 +6,16 @@ export interface EditorCommand {
   args: string[];
 }
 
-interface SpawnFn {
-  (
-    command: string,
-    args: string[],
-    options: { stdio: 'inherit' },
-  ): {
-    on: (
-      event: 'close' | 'error',
-      listener: ((code: number | null) => void) | ((err: NodeJS.ErrnoException) => void),
-    ) => void;
-  };
-}
+type SpawnFn = (
+  command: string,
+  args: string[],
+  options: { stdio: 'inherit' },
+) => {
+  on: (
+    event: 'close' | 'error',
+    listener: ((code: number | null) => void) | ((err: NodeJS.ErrnoException) => void),
+  ) => void;
+};
 
 let spawnImpl: SpawnFn = spawn as unknown as SpawnFn;
 

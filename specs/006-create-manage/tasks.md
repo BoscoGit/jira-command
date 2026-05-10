@@ -31,7 +31,7 @@ description: "Task list for 006 — Criação e Gerenciamento de Issues (jira-co
 
 ## Phase 1: Setup
 
-- [ ] T001 Rodar `npm install`, `npm run lint`, `npm run typecheck`, `npm run test` — esperado: 352 testes verdes (acumulado 001..005)
+- [X] T001 Rodar `npm install`, `npm run lint`, `npm run typecheck`, `npm run test` — esperado: 352 testes verdes (acumulado 001..005)
 
 ---
 
@@ -39,14 +39,14 @@ description: "Task list for 006 — Criação e Gerenciamento de Issues (jira-co
 
 **Purpose**: 4 módulos REST + tests.
 
-- [ ] T002 [P] Criar `src/jira/create.ts` exportando: (a) tipo `CreatedIssue { key, url }`; (b) `createIssue(config, fields: Record<string, unknown>): Promise<CreatedIssue>` que faz `POST /rest/api/2/issue` com body `{ fields }`, parseia 201, monta `url` como `<baseUrl>/browse/<key>`; (c) `getParentProjectKey(config, parentKey): Promise<string>` que faz `GET /rest/api/2/issue/<parent>?fields=project` e retorna `fields.project.key`; (d) `getSubtasks(config, key): Promise<Subtask[]>` que faz `GET /rest/api/2/issue/<key>?fields=subtasks` e mapeia. `Subtask = { key, status, type, summary }`. Validam Key local quando aplicável
-- [ ] T003 [P] Criar `tests/jira/create.test.ts` cobrindo: (a) `createIssue` envia POST com body `{fields}`, parseia `key`, monta `url` correto; (b) campos opcionais omitidos no body quando ausentes; (c) `getParentProjectKey` parseia `fields.project.key`; (d) `getSubtasks` parseia array; (e) Key inválida em `getParentProjectKey`/`getSubtasks` → exit 2 sem fetch
-- [ ] T004 [P] Criar `src/jira/links.ts` exportando: (a) tipo `IssueLink { direction: '->'|'<-', type, key, status, summary }`; (b) `createLink(config, from, type, to): Promise<void>` que faz `POST /rest/api/2/issueLink` com body `{ type:{name}, outwardIssue:{key:from}, inwardIssue:{key:to} }`; (c) `getIssueLinks(config, key): Promise<IssueLink[]>` que faz `GET /rest/api/2/issue/<key>?fields=issuelinks` e mapeia: outwardIssue → `{direction:'->', type: type.outward, ...}`; inwardIssue → `{direction:'<-', type: type.inward, ...}`. Valida Keys
-- [ ] T005 [P] Criar `tests/jira/links.test.ts` cobrindo: (a) `createLink` envia POST com body shape correto; (b) `getIssueLinks` mapeia outward → '->'; (c) inward → '<-'; (d) tipo `outward` vs `inward` da API (rótulo direcional); (e) Keys inválidas → exit 2 sem fetch
-- [ ] T006 [P] Criar `src/jira/projects.ts` exportando: (a) tipo `Project { key, id, name, issues? }`; (b) `listAllProjects(config): Promise<Project[]>` que faz `GET /rest/api/2/project` e ordena por `key` alfabeticamente; (c) `listMyProjects(config): Promise<{ projects: Project[]; truncated: boolean }>` que usa JQL `assignee = currentUser() OR reporter = currentUser()` em `GET /search?fields=project&maxResults=500`, agrupa por project.key contando issues, ordena por `key`. `truncated` = `total > 500`
-- [ ] T007 [P] Criar `tests/jira/projects.test.ts` cobrindo: (a) `listAllProjects` parseia + ordena por key; (b) `listMyProjects` agrupa por project.key + conta issues; (c) `truncated` true quando total > 500; (d) sem projetos → array vazio
-- [ ] T008 [P] Criar `src/jira/users.ts` exportando: (a) tipo `User { username, name, email, active }`; (b) `listAssignableUsers(config, project, filter?): Promise<User[]>` que: se `filter`, faz 1 chamada `GET /user/assignable/search?project=<P>&username=<filter>&maxResults=1000`; senão faz 26 chamadas paralelas (`Promise.all`) iterando `username` em `a..z`, deduplicando por `name` (username) via `Map`. Ordena resultado por `displayName`
-- [ ] T009 [P] Criar `tests/jira/users.test.ts` cobrindo: (a) com filter: 1 chamada com `username=<filter>`; (b) sem filter: 26 chamadas paralelas (assert via `vi.mock`); (c) deduplica por username (mesmo user retornado em "j" e "j-silva" aparece 1× no resultado); (d) ordena por displayName; (e) sem users → array vazio
+- [X] T002 [P] Criar `src/jira/create.ts` exportando: (a) tipo `CreatedIssue { key, url }`; (b) `createIssue(config, fields: Record<string, unknown>): Promise<CreatedIssue>` que faz `POST /rest/api/2/issue` com body `{ fields }`, parseia 201, monta `url` como `<baseUrl>/browse/<key>`; (c) `getParentProjectKey(config, parentKey): Promise<string>` que faz `GET /rest/api/2/issue/<parent>?fields=project` e retorna `fields.project.key`; (d) `getSubtasks(config, key): Promise<Subtask[]>` que faz `GET /rest/api/2/issue/<key>?fields=subtasks` e mapeia. `Subtask = { key, status, type, summary }`. Validam Key local quando aplicável
+- [X] T003 [P] Criar `tests/jira/create.test.ts` cobrindo: (a) `createIssue` envia POST com body `{fields}`, parseia `key`, monta `url` correto; (b) campos opcionais omitidos no body quando ausentes; (c) `getParentProjectKey` parseia `fields.project.key`; (d) `getSubtasks` parseia array; (e) Key inválida em `getParentProjectKey`/`getSubtasks` → exit 2 sem fetch
+- [X] T004 [P] Criar `src/jira/links.ts` exportando: (a) tipo `IssueLink { direction: '->'|'<-', type, key, status, summary }`; (b) `createLink(config, from, type, to): Promise<void>` que faz `POST /rest/api/2/issueLink` com body `{ type:{name}, outwardIssue:{key:from}, inwardIssue:{key:to} }`; (c) `getIssueLinks(config, key): Promise<IssueLink[]>` que faz `GET /rest/api/2/issue/<key>?fields=issuelinks` e mapeia: outwardIssue → `{direction:'->', type: type.outward, ...}`; inwardIssue → `{direction:'<-', type: type.inward, ...}`. Valida Keys
+- [X] T005 [P] Criar `tests/jira/links.test.ts` cobrindo: (a) `createLink` envia POST com body shape correto; (b) `getIssueLinks` mapeia outward → '->'; (c) inward → '<-'; (d) tipo `outward` vs `inward` da API (rótulo direcional); (e) Keys inválidas → exit 2 sem fetch
+- [X] T006 [P] Criar `src/jira/projects.ts` exportando: (a) tipo `Project { key, id, name, issues? }`; (b) `listAllProjects(config): Promise<Project[]>` que faz `GET /rest/api/2/project` e ordena por `key` alfabeticamente; (c) `listMyProjects(config): Promise<{ projects: Project[]; truncated: boolean }>` que usa JQL `assignee = currentUser() OR reporter = currentUser()` em `GET /search?fields=project&maxResults=500`, agrupa por project.key contando issues, ordena por `key`. `truncated` = `total > 500`
+- [X] T007 [P] Criar `tests/jira/projects.test.ts` cobrindo: (a) `listAllProjects` parseia + ordena por key; (b) `listMyProjects` agrupa por project.key + conta issues; (c) `truncated` true quando total > 500; (d) sem projetos → array vazio
+- [X] T008 [P] Criar `src/jira/users.ts` exportando: (a) tipo `User { username, name, email, active }`; (b) `listAssignableUsers(config, project, filter?): Promise<User[]>` que: se `filter`, faz 1 chamada `GET /user/assignable/search?project=<P>&username=<filter>&maxResults=1000`; senão faz 26 chamadas paralelas (`Promise.all`) iterando `username` em `a..z`, deduplicando por `name` (username) via `Map`. Ordena resultado por `displayName`
+- [X] T009 [P] Criar `tests/jira/users.test.ts` cobrindo: (a) com filter: 1 chamada com `username=<filter>`; (b) sem filter: 26 chamadas paralelas (assert via `vi.mock`); (c) deduplica por username (mesmo user retornado em "j" e "j-silva" aparece 1× no resultado); (d) ordena por displayName; (e) sem users → array vazio
 
 **Checkpoint Phase 2**: typecheck + 32 novos testes verdes.
 
@@ -60,12 +60,12 @@ description: "Task list for 006 — Criação e Gerenciamento de Issues (jira-co
 
 ### Tests for US1
 
-- [ ] T010 [P] [US1] Criar `tests/commands/new.test.ts` cobrindo: (a) `--project ABC --summary "X"` chama `createIssue` com body `{fields:{project:{key:"ABC"}, summary:"X", issuetype:{name:"Task"}}}` (default Task); (b) stderr `Issue criada: ABC-456` + URL; stdout `ABC-456`; (c) `--type Bug` propaga; (d) `--desc/--priority/--assignee` propagam quando presentes; (e) campos opcionais OMITIDOS no body quando ausentes; (f) `--quiet` → stdout só Key, sem URL nem mensagem; (g) `--json` → envelope `{ok, key, action:'new', url}`; (h) `--summary` ausente → exit 2 (citty); (i) `--project` ausente → exit 2 (citty)
+- [X] T010 [P] [US1] Criar `tests/commands/new.test.ts` cobrindo: (a) `--project ABC --summary "X"` chama `createIssue` com body `{fields:{project:{key:"ABC"}, summary:"X", issuetype:{name:"Task"}}}` (default Task); (b) stderr `Issue criada: ABC-456` + URL; stdout `ABC-456`; (c) `--type Bug` propaga; (d) `--desc/--priority/--assignee` propagam quando presentes; (e) campos opcionais OMITIDOS no body quando ausentes; (f) `--quiet` → stdout só Key, sem URL nem mensagem; (g) `--json` → envelope `{ok, key, action:'new', url}`; (h) `--summary` ausente → exit 2 (citty); (i) `--project` ausente → exit 2 (citty)
 
 ### Implementation for US1
 
-- [ ] T011 [US1] Criar `src/commands/new.ts` com flags `--project` `--summary` (obrig), `--type` (default "Task"), `--desc --priority --assignee --quiet` (opc). Constrói body montando `fields` apenas com chaves não-vazias. Chama `createIssue`. Output: humano stderr Issue criada+URL + stdout Key; `--quiet` só Key; `--json` envelope. Depende T002
-- [ ] T012 [US1] Em `src/commands/root.ts`, registrar `newCommand` (chave `new`)
+- [X] T011 [US1] Criar `src/commands/new.ts` com flags `--project` `--summary` (obrig), `--type` (default "Task"), `--desc --priority --assignee --quiet` (opc). Constrói body montando `fields` apenas com chaves não-vazias. Chama `createIssue`. Output: humano stderr Issue criada+URL + stdout Key; `--quiet` só Key; `--json` envelope. Depende T002
+- [X] T012 [US1] Em `src/commands/root.ts`, registrar `newCommand` (chave `new`)
 
 ---
 
@@ -77,12 +77,12 @@ description: "Task list for 006 — Criação e Gerenciamento de Issues (jira-co
 
 ### Tests for US2
 
-- [ ] T013 [P] [US2] Criar `tests/commands/sub.test.ts` cobrindo: (a) `--parent ABC-1 --summary "X"` chama `getParentProjectKey("ABC-1")` (mock retorna "ABC") + `createIssue` com body incluindo `project:{key:"ABC"}, parent:{key:"ABC-1"}, issuetype:{name:"Sub-task"}` (default); (b) `--type Subtarefa` (PT-BR) propaga; (c) `--desc/--assignee` propagam; (d) stderr `Subtask criada: ABC-501 (parent ABC-1)` + URL; stdout `ABC-501`; (e) `--quiet` → stdout só Key; (f) `--json` envelope `{ok, key, action:'sub', url, parent}`; (g) parent inválido → exit 2; (h) parent inexistente (404) → exit 4
+- [X] T013 [P] [US2] Criar `tests/commands/sub.test.ts` cobrindo: (a) `--parent ABC-1 --summary "X"` chama `getParentProjectKey("ABC-1")` (mock retorna "ABC") + `createIssue` com body incluindo `project:{key:"ABC"}, parent:{key:"ABC-1"}, issuetype:{name:"Sub-task"}` (default); (b) `--type Subtarefa` (PT-BR) propaga; (c) `--desc/--assignee` propagam; (d) stderr `Subtask criada: ABC-501 (parent ABC-1)` + URL; stdout `ABC-501`; (e) `--quiet` → stdout só Key; (f) `--json` envelope `{ok, key, action:'sub', url, parent}`; (g) parent inválido → exit 2; (h) parent inexistente (404) → exit 4
 
 ### Implementation for US2
 
-- [ ] T014 [US2] Criar `src/commands/sub.ts` com flags `--parent --summary` (obrig), `--type` (default "Sub-task"), `--desc --assignee --quiet` (opc). Valida parent via `validateKey`. Chama `getParentProjectKey(parent)` + `createIssue` com `project` herdado e `parent` no fields. Output similar a `new`. Depende T002
-- [ ] T015 [US2] Em `src/commands/root.ts`, registrar `subCommand` (chave `sub`)
+- [X] T014 [US2] Criar `src/commands/sub.ts` com flags `--parent --summary` (obrig), `--type` (default "Sub-task"), `--desc --assignee --quiet` (opc). Valida parent via `validateKey`. Chama `getParentProjectKey(parent)` + `createIssue` com `project` herdado e `parent` no fields. Output similar a `new`. Depende T002
+- [X] T015 [US2] Em `src/commands/root.ts`, registrar `subCommand` (chave `sub`)
 
 ---
 
@@ -94,12 +94,12 @@ description: "Task list for 006 — Criação e Gerenciamento de Issues (jira-co
 
 ### Tests for US3
 
-- [ ] T016 [P] [US3] Criar `tests/commands/subs.test.ts` cobrindo: (a) tabela KEY/STATUS/TIPO/RESUMO; (b) sem subtasks → "<KEY> não tem subtasks."; (c) `--json` array; (d) Key inválida → exit 2; (e) pipe stdin
+- [X] T016 [P] [US3] Criar `tests/commands/subs.test.ts` cobrindo: (a) tabela KEY/STATUS/TIPO/RESUMO; (b) sem subtasks → "<KEY> não tem subtasks."; (c) `--json` array; (d) Key inválida → exit 2; (e) pipe stdin
 
 ### Implementation for US3
 
-- [ ] T017 [US3] Criar `src/commands/subs.ts` com arg posicional opc `key`. Usa `resolveKeys` + `validateKey` + `getSubtasks(config, key)`. Saída humana via `writeTable`; `--json` array. Depende T002
-- [ ] T018 [US3] Em `src/commands/root.ts`, registrar `subsCommand` (chave `subs`)
+- [X] T017 [US3] Criar `src/commands/subs.ts` com arg posicional opc `key`. Usa `resolveKeys` + `validateKey` + `getSubtasks(config, key)`. Saída humana via `writeTable`; `--json` array. Depende T002
+- [X] T018 [US3] Em `src/commands/root.ts`, registrar `subsCommand` (chave `subs`)
 
 ---
 
@@ -111,12 +111,12 @@ description: "Task list for 006 — Criação e Gerenciamento de Issues (jira-co
 
 ### Tests for US4
 
-- [ ] T019 [P] [US4] Criar `tests/commands/link.test.ts` cobrindo: (a) `--from ABC-1 --type Blocks --to ABC-2` chama `createLink` com args corretos; (b) stderr `Link criado: ABC-1 -[Blocks]-> ABC-2.`; (c) `--json` envelope `{ok, action:'link', from, to, type}`; (d) Keys inválidas (`from`/`to`) → exit 2; (e) tipo inválido (400) → mensagem servidor + exit 1
+- [X] T019 [P] [US4] Criar `tests/commands/link.test.ts` cobrindo: (a) `--from ABC-1 --type Blocks --to ABC-2` chama `createLink` com args corretos; (b) stderr `Link criado: ABC-1 -[Blocks]-> ABC-2.`; (c) `--json` envelope `{ok, action:'link', from, to, type}`; (d) Keys inválidas (`from`/`to`) → exit 2; (e) tipo inválido (400) → mensagem servidor + exit 1
 
 ### Implementation for US4
 
-- [ ] T020 [US4] Criar `src/commands/link.ts` com flags `--from --type --to` (todos obrig). Valida `from`/`to` via `validateKey`. Chama `createLink`. Depende T004
-- [ ] T021 [US4] Em `src/commands/root.ts`, registrar `linkCommand` (chave `link`)
+- [X] T020 [US4] Criar `src/commands/link.ts` com flags `--from --type --to` (todos obrig). Valida `from`/`to` via `validateKey`. Chama `createLink`. Depende T004
+- [X] T021 [US4] Em `src/commands/root.ts`, registrar `linkCommand` (chave `link`)
 
 ---
 
@@ -128,12 +128,12 @@ description: "Task list for 006 — Criação e Gerenciamento de Issues (jira-co
 
 ### Tests for US5
 
-- [ ] T022 [P] [US5] Criar `tests/commands/links.test.ts` cobrindo: (a) tabela DIREÇÃO/TIPO/ISSUE/STATUS/RESUMO; (b) outward → `->`; inward → `<-`; (c) sem links → "<KEY> não tem links."; (d) `--json` array; (e) Key inválida → exit 2
+- [X] T022 [P] [US5] Criar `tests/commands/links.test.ts` cobrindo: (a) tabela DIREÇÃO/TIPO/ISSUE/STATUS/RESUMO; (b) outward → `->`; inward → `<-`; (c) sem links → "<KEY> não tem links."; (d) `--json` array; (e) Key inválida → exit 2
 
 ### Implementation for US5
 
-- [ ] T023 [US5] Criar `src/commands/links.ts` com arg posicional opc `key`. Usa `resolveKeys` + `validateKey` + `getIssueLinks(config, key)`. Saída humana via `writeTable`; `--json` array. Depende T004
-- [ ] T024 [US5] Em `src/commands/root.ts`, registrar `linksCommand` (chave `links`)
+- [X] T023 [US5] Criar `src/commands/links.ts` com arg posicional opc `key`. Usa `resolveKeys` + `validateKey` + `getIssueLinks(config, key)`. Saída humana via `writeTable`; `--json` array. Depende T004
+- [X] T024 [US5] Em `src/commands/root.ts`, registrar `linksCommand` (chave `links`)
 
 ---
 
@@ -145,12 +145,12 @@ description: "Task list for 006 — Criação e Gerenciamento de Issues (jira-co
 
 ### Tests for US6
 
-- [ ] T025 [P] [US6] Criar `tests/commands/projects.test.ts` cobrindo: (a) sem `--all` → tabela KEY/ID/NOME/ISSUES + chama `listMyProjects`; (b) `--all` → tabela KEY/ID/NOME (sem ISSUES) + chama `listAllProjects`; (c) vazio → "Nenhum projeto encontrado."; (d) sem `--all` + `truncated:true` → aviso em stderr; (e) `--json` array
+- [X] T025 [P] [US6] Criar `tests/commands/projects.test.ts` cobrindo: (a) sem `--all` → tabela KEY/ID/NOME/ISSUES + chama `listMyProjects`; (b) `--all` → tabela KEY/ID/NOME (sem ISSUES) + chama `listAllProjects`; (c) vazio → "Nenhum projeto encontrado."; (d) sem `--all` + `truncated:true` → aviso em stderr; (e) `--json` array
 
 ### Implementation for US6
 
-- [ ] T026 [US6] Criar `src/commands/projects.ts` com flag `--all`. Sem `--all`: `listMyProjects` → tabela 4 colunas; se `truncated` exibe aviso stderr. Com `--all`: `listAllProjects` → tabela 3 colunas. `--json` array. Depende T006
-- [ ] T027 [US6] Em `src/commands/root.ts`, registrar `projectsCommand` (chave `projects`)
+- [X] T026 [US6] Criar `src/commands/projects.ts` com flag `--all`. Sem `--all`: `listMyProjects` → tabela 4 colunas; se `truncated` exibe aviso stderr. Com `--all`: `listAllProjects` → tabela 3 colunas. `--json` array. Depende T006
+- [X] T027 [US6] Em `src/commands/root.ts`, registrar `projectsCommand` (chave `projects`)
 
 ---
 
@@ -162,22 +162,22 @@ description: "Task list for 006 — Criação e Gerenciamento de Issues (jira-co
 
 ### Tests for US7
 
-- [ ] T028 [P] [US7] Criar `tests/commands/users.test.ts` cobrindo: (a) `<PROJETO>` obrig + `--filter` → 1 chamada via `listAssignableUsers(p, filter)`; (b) sem `--filter` → 26 chamadas (a-z scan); (c) tabela USERNAME/NOME/EMAIL/ATIVO + rodapé contagem; (d) vazio → "Nenhum usuário encontrado em <PROJETO>."; (e) `--json` array; (f) ordenado por displayName
+- [X] T028 [P] [US7] Criar `tests/commands/users.test.ts` cobrindo: (a) `<PROJETO>` obrig + `--filter` → 1 chamada via `listAssignableUsers(p, filter)`; (b) sem `--filter` → 26 chamadas (a-z scan); (c) tabela USERNAME/NOME/EMAIL/ATIVO + rodapé contagem; (d) vazio → "Nenhum usuário encontrado em <PROJETO>."; (e) `--json` array; (f) ordenado por displayName
 
 ### Implementation for US7
 
-- [ ] T029 [US7] Criar `src/commands/users.ts` com arg posicional `project` (obrig) + flag `--filter`. Chama `listAssignableUsers(config, project, filter)`. Saída humana: tabela 4 colunas + rodapé `<N> usuários encontrados.` em stderr; `--json` array. Depende T008
-- [ ] T030 [US7] Em `src/commands/root.ts`, registrar `usersCommand` (chave `users`)
+- [X] T029 [US7] Criar `src/commands/users.ts` com arg posicional `project` (obrig) + flag `--filter`. Chama `listAssignableUsers(config, project, filter)`. Saída humana: tabela 4 colunas + rodapé `<N> usuários encontrados.` em stderr; `--json` array. Depende T008
+- [X] T030 [US7] Em `src/commands/root.ts`, registrar `usersCommand` (chave `users`)
 
 ---
 
 ## Phase 10: Polish
 
-- [ ] T031 [P] Atualizar `README.md` com seção feature 006 (7 comandos novos), exemplos de `--quiet` em `new`/`sub`, observação sobre `--all` em projects e a-z scan em users
-- [ ] T032 Rodar `npm run lint && npm run typecheck && npm run test && npm run build` — todos verdes
+- [X] T031 [P] Atualizar `README.md` com seção feature 006 (7 comandos novos), exemplos de `--quiet` em `new`/`sub`, observação sobre `--all` em projects e a-z scan em users
+- [X] T032 Rodar `npm run lint && npm run typecheck && npm run test && npm run build` — todos verdes
 - [ ] T033 Executar V1..V13 do `quickstart.md` em terminal real contra Jira
 - [ ] T034 Push branch + abrir PR + verificar CI verde
-- [ ] T035 Avaliar `npx vitest run --coverage` — meta 80% nos novos módulos: `src/jira/{create,links,projects,users}.ts`, `src/commands/{new,sub,subs,link,links,projects,users}.ts`
+- [X] T035 Avaliar `npx vitest run --coverage` — meta 80% nos novos módulos: `src/jira/{create,links,projects,users}.ts`, `src/commands/{new,sub,subs,link,links,projects,users}.ts`
 
 ---
 
