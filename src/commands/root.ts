@@ -2,13 +2,18 @@ import { defineCommand, runCommand, showUsage } from 'citty';
 import { JiraError } from '../errors.js';
 import { getOutputMode, humanError, jsonOut, setOutputMode } from '../output.js';
 import { VERSION } from '../version.js';
+import { doneCommand } from './done.js';
 import { findCommand } from './find.js';
 import { getCommand } from './get.js';
 import { meCommand } from './me.js';
 import { mineCommand } from './mine.js';
+import { moveCommand } from './move.js';
 import { openCommand } from './open.js';
 import { pickCommand } from './pick.js';
+import { startCommand } from './start.js';
 import { statusCommand } from './status.js';
+import { stopCommand } from './stop.js';
+import { transCommand } from './trans.js';
 
 export const rootCommand = defineCommand({
   meta: {
@@ -42,6 +47,11 @@ export const rootCommand = defineCommand({
     status: statusCommand,
     open: openCommand,
     pick: pickCommand,
+    trans: transCommand,
+    start: startCommand,
+    done: doneCommand,
+    stop: stopCommand,
+    move: moveCommand,
   },
 });
 

@@ -6,6 +6,8 @@ A feature **001 (Fundação)** entrega: configuração via env, autenticação B
 
 A feature **002 (Consulta de Issues)** entrega seis comandos de leitura: `mine`, `get`, `find`, `status`, `open`, `pick`.
 
+A feature **003 (Transições de Workflow)** entrega cinco comandos: `trans`, `start`, `done`, `stop`, `move`.
+
 ## Requisitos
 
 - Node 22 LTS (recursos usados rodam em Node 20+, mas `engines` declara `>=22`).
@@ -67,6 +69,28 @@ echo ABC-123 | jira open                     # pipe stdin em comandos com <KEY>
 ```
 
 `fzf` é dependência opcional — instale em https://github.com/junegunn/fzf para usar `jira pick`. Demais comandos funcionam sem ele.
+
+### Transições de workflow (feature 003)
+
+```powershell
+jira trans ABC-123                # lista transições disponíveis (ID, Nome, Para)
+jira start ABC-123                # match automático para "Em Andamento"
+jira done ABC-123                 # match automático para "Concluído"
+jira stop ABC-123                 # match automático para "A Fazer"
+jira move ABC-123 21              # aplica transição por ID exato (fallback)
+jira pick | jira start            # pipeline: seleciona e inicia
+echo ABC-1 | jira done            # pipe stdin
+```
+
+Match ambíguo (várias transições casando o padrão) recusa aplicar e instrui usar `jira move`. A mensagem de sucesso usa o nome real do estado destino retornado pela API (ex: "Doing", "Em desenvolvimento").
+
+Override dos padrões via env quando workflow do projeto usa nomes customizados:
+
+```powershell
+$env:JIRA_PATTERN_START = "Custom Start Step"   # regex case-insensitive
+$env:JIRA_PATTERN_DONE  = "Closed|Cancelled"
+$env:JIRA_PATTERN_STOP  = "Backlog"
+```
 
 ## Pipeline
 
