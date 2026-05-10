@@ -182,7 +182,7 @@ description: "Task list for 002 — Consulta de Issues (jira-command)"
 - [X] T030 [P] Atualizar `README.md` na raiz adicionando seção dos 6 comandos novos (mine/get/find/status/open/pick) com exemplo de uso e link para `specs/002-issue-browsing/`
 - [X] T031 Rodar `npm run lint && npm run typecheck && npm run test && npm run build` localmente — TODOS devem passar
 - [ ] T032 Executar V1..V13 de `quickstart.md` em terminal real contra Jira
-- [ ] T033 Push branch `002-issue-browsing` + abrir PR para `master` + verificar workflow CI verde
+- [X] T033 Push branch `002-issue-browsing` + abrir PR para `master` + verificar workflow CI verde
 - [X] T034 Avaliar `npx vitest run --coverage` — meta mínima 80% nos novos módulos: `src/jira/key.ts`, `src/jira/issues.ts`, `src/format/table.ts`, `src/platform/browser.ts`, `src/platform/fzf.ts`, `src/commands/mine.ts`, `src/commands/get.ts`, `src/commands/find.ts`, `src/commands/status.ts`, `src/commands/open.ts`, `src/commands/pick.ts`
 
 ---
