@@ -36,7 +36,7 @@ description: "Task list for 002 — Consulta de Issues (jira-command)"
 
 **Purpose**: confirmar que a base 001 mergeada está saudável antes de adicionar comandos novos.
 
-- [ ] T001 Rodar `npm install`, `npm run lint`, `npm run typecheck` e `npm run test` na raiz para confirmar que a foundation 001 importa sem erros e os 92 testes passam — se falhar, investigar antes de prosseguir
+- [X] T001 Rodar `npm install`, `npm run lint`, `npm run typecheck` e `npm run test` na raiz para confirmar que a foundation 001 importa sem erros e os 92 testes passam — se falhar, investigar antes de prosseguir
 
 **Checkpoint Phase 1**: testes verdes; nenhum arquivo modificado.
 
@@ -48,12 +48,12 @@ description: "Task list for 002 — Consulta de Issues (jira-command)"
 
 **⚠️ CRITICAL**: nenhuma US começa antes de Phase 2 fechar.
 
-- [ ] T002 [P] Criar `src/jira/key.ts` com `KEY_REGEX = /^[A-Z][A-Z0-9_]+-\d+$/` e função `validateKey(input: string): string` que retorna `input` quando casa o regex, ou lança `JiraError` exitCode 2 com mensagem `Formato de Key inválido: '<entrada>'. Esperado padrão tipo ABC-123.` (RF-008 do spec 002)
-- [ ] T003 [P] Criar `src/format/table.ts` com tipo `TableColumn { header, key, align?, maxWidth? }` e função `writeTable<T extends object>(rows: T[], columns: TableColumn[], opts?: { stream?: NodeJS.WriteStream }): void` — calcula largura máxima por coluna, alinha (left default), trunca com `...` quando excede `maxWidth`, escreve linha por linha via `humanLog`. NÃO escreve nada quando `rows` vazio. Em modo `--json` o caller NÃO chama esta função
-- [ ] T004 [P] Criar `tests/jira/key.test.ts` cobrindo: (a) Keys válidas (ABC-1, MTET-9999, A1_B-42), (b) Keys inválidas (123, ABC, abc-1, ABC-, ABC-x) → JiraError exitCode 2, (c) input vazio → exitCode 2
-- [ ] T005 [P] Criar `tests/format/table.test.ts` cobrindo: (a) alinhamento básico (3 colunas, 2 rows), (b) cabeçalho em maiúsculas, (c) `maxWidth` trunca célula com `...`, (d) `rows` vazio → não escreve nada, (e) chave ausente da row → célula vazia
-- [ ] T006 Criar `src/jira/issues.ts` exportando: (a) `Issue` e `IssueSummary` types, (b) `searchIssues(config, jql, fields, maxResults): Promise<{ issues: IssueSummary[]; total: number }>` que chama `GET /rest/api/2/search?jql=<encoded>&maxResults=N&fields=<csv>` via `jiraFetch`, (c) `getIssue(config, key): Promise<Issue>` que chama `GET /rest/api/2/issue/<key>?fields=*navigable,comment` e, se `fields.comment.comments` ausente, faz fallback para `getIssueComments`, (d) `getIssueComments(config, key, max=10): Promise<Comment[]>`. Usa `validateKey` em `getIssue` antes do fetch. Depende T002
-- [ ] T007 [P] Criar `tests/jira/issues.test.ts` cobrindo: (a) `searchIssues` envia URL com `jql` URL-encoded, `maxResults` e `fields` corretos (mock fetch), (b) parseia `total` e `issues[]`, (c) `getIssue` chama `?fields=*navigable,comment` e retorna comentários inline quando presentes, (d) `getIssue` faz fallback para `/comment` quando inline ausente, (e) `getIssue` valida Key local — passa `123abc` → JiraError exitCode 2 ANTES de qualquer fetch (assert `fetch` NÃO foi chamado), (f) 404 propaga JiraError exitCode 4
+- [X] T002 [P] Criar `src/jira/key.ts` com `KEY_REGEX = /^[A-Z][A-Z0-9_]+-\d+$/` e função `validateKey(input: string): string` que retorna `input` quando casa o regex, ou lança `JiraError` exitCode 2 com mensagem `Formato de Key inválido: '<entrada>'. Esperado padrão tipo ABC-123.` (RF-008 do spec 002)
+- [X] T003 [P] Criar `src/format/table.ts` com tipo `TableColumn { header, key, align?, maxWidth? }` e função `writeTable<T extends object>(rows: T[], columns: TableColumn[], opts?: { stream?: NodeJS.WriteStream }): void` — calcula largura máxima por coluna, alinha (left default), trunca com `...` quando excede `maxWidth`, escreve linha por linha via `humanLog`. NÃO escreve nada quando `rows` vazio. Em modo `--json` o caller NÃO chama esta função
+- [X] T004 [P] Criar `tests/jira/key.test.ts` cobrindo: (a) Keys válidas (ABC-1, MTET-9999, A1_B-42), (b) Keys inválidas (123, ABC, abc-1, ABC-, ABC-x) → JiraError exitCode 2, (c) input vazio → exitCode 2
+- [X] T005 [P] Criar `tests/format/table.test.ts` cobrindo: (a) alinhamento básico (3 colunas, 2 rows), (b) cabeçalho em maiúsculas, (c) `maxWidth` trunca célula com `...`, (d) `rows` vazio → não escreve nada, (e) chave ausente da row → célula vazia
+- [X] T006 Criar `src/jira/issues.ts` exportando: (a) `Issue` e `IssueSummary` types, (b) `searchIssues(config, jql, fields, maxResults): Promise<{ issues: IssueSummary[]; total: number }>` que chama `GET /rest/api/2/search?jql=<encoded>&maxResults=N&fields=<csv>` via `jiraFetch`, (c) `getIssue(config, key): Promise<Issue>` que chama `GET /rest/api/2/issue/<key>?fields=*navigable,comment` e, se `fields.comment.comments` ausente, faz fallback para `getIssueComments`, (d) `getIssueComments(config, key, max=10): Promise<Comment[]>`. Usa `validateKey` em `getIssue` antes do fetch. Depende T002
+- [X] T007 [P] Criar `tests/jira/issues.test.ts` cobrindo: (a) `searchIssues` envia URL com `jql` URL-encoded, `maxResults` e `fields` corretos (mock fetch), (b) parseia `total` e `issues[]`, (c) `getIssue` chama `?fields=*navigable,comment` e retorna comentários inline quando presentes, (d) `getIssue` faz fallback para `/comment` quando inline ausente, (e) `getIssue` valida Key local — passa `123abc` → JiraError exitCode 2 ANTES de qualquer fetch (assert `fetch` NÃO foi chamado), (f) 404 propaga JiraError exitCode 4
 
 **Checkpoint Phase 2**: `npm run typecheck` limpo; `npm run test` verde com novos testes.
 
@@ -67,12 +67,12 @@ description: "Task list for 002 — Consulta de Issues (jira-command)"
 
 ### Tests for User Story 1
 
-- [ ] T008 [P] [US1] Criar `tests/commands/mine.test.ts` cobrindo: (a) saída humana imprime tabela com colunas Key/Prioridade/Status/Resumo (mock `searchIssues`), (b) sem issues → "Nenhuma issue encontrada." em stdout, (c) `total > 50` → tabela + `Mostrando 50 de <total> issues.` em stderr, (d) `--json` emite array de objetos com chaves `key, summary, status, priority, assignee?, updated`, (e) JQL chamado: `assignee = currentUser() AND resolution = Unresolved ORDER BY priority DESC, updated DESC` (assert via mock)
+- [X] T008 [P] [US1] Criar `tests/commands/mine.test.ts` cobrindo: (a) saída humana imprime tabela com colunas Key/Prioridade/Status/Resumo (mock `searchIssues`), (b) sem issues → "Nenhuma issue encontrada." em stdout, (c) `total > 50` → tabela + `Mostrando 50 de <total> issues.` em stderr, (d) `--json` emite array de objetos com chaves `key, summary, status, priority, assignee?, updated`, (e) JQL chamado: `assignee = currentUser() AND resolution = Unresolved ORDER BY priority DESC, updated DESC` (assert via mock)
 
 ### Implementation for User Story 1
 
-- [ ] T009 [US1] Criar `src/commands/mine.ts` exportando `mineCommand` via `citty.defineCommand`: chama `searchIssues` com JQL fixo, `fields=summary,status,priority`, `maxResults=50`. Em modo padrão usa `writeTable` (colunas Key, Prioridade, Status, Resumo); em `--json` chama `jsonOut` com array. Quando `total > 50` escreve aviso em stderr via `humanLog(process.stderr, ...)`. Depende T006
-- [ ] T010 [US1] Em `src/commands/root.ts`, registrar `mineCommand` em `subCommands` (chave `mine`)
+- [X] T009 [US1] Criar `src/commands/mine.ts` exportando `mineCommand` via `citty.defineCommand`: chama `searchIssues` com JQL fixo, `fields=summary,status,priority`, `maxResults=50`. Em modo padrão usa `writeTable` (colunas Key, Prioridade, Status, Resumo); em `--json` chama `jsonOut` com array. Quando `total > 50` escreve aviso em stderr via `humanLog(process.stderr, ...)`. Depende T006
+- [X] T010 [US1] Em `src/commands/root.ts`, registrar `mineCommand` em `subCommands` (chave `mine`)
 
 **Checkpoint US1**: `jira mine` funciona contra Jira real com tabela alinhada.
 
@@ -86,12 +86,12 @@ description: "Task list for 002 — Consulta de Issues (jira-command)"
 
 ### Tests for User Story 2
 
-- [ ] T011 [P] [US2] Criar `tests/commands/get.test.ts` cobrindo: (a) saída humana inclui `=== <KEY> ===`, Summary/Status/Priority/Assignee/Reporter, Description e seção Comments com 10 mais recentes, (b) `--json` emite objeto único com `comments` aninhado, (c) Key inválida (`123abc`) → exitCode 2 antes do fetch (mock `searchIssues`/`getIssue` não chamados), (d) 404 → "Issue <KEY> não encontrada." em stderr + exitCode 4, (e) sem comentários → não imprime seção Comments, (f) pipe via stdin: `runRootSafe(['get'])` com stdin `"ABC-1\n"` mockado processa ABC-1, (g) múltiplas linhas no stdin processa sequencialmente
+- [X] T011 [P] [US2] Criar `tests/commands/get.test.ts` cobrindo: (a) saída humana inclui `=== <KEY> ===`, Summary/Status/Priority/Assignee/Reporter, Description e seção Comments com 10 mais recentes, (b) `--json` emite objeto único com `comments` aninhado, (c) Key inválida (`123abc`) → exitCode 2 antes do fetch (mock `searchIssues`/`getIssue` não chamados), (d) 404 → "Issue <KEY> não encontrada." em stderr + exitCode 4, (e) sem comentários → não imprime seção Comments, (f) pipe via stdin: `runRootSafe(['get'])` com stdin `"ABC-1\n"` mockado processa ABC-1, (g) múltiplas linhas no stdin processa sequencialmente
 
 ### Implementation for User Story 2
 
-- [ ] T012 [US2] Criar `src/commands/get.ts` exportando `getCommand`: aceita arg posicional opcional `key`; usa `resolveKeys` (RF-012) para combinar arg+stdin; itera Keys; para cada Key chama `validateKey` + `getIssue`. Em humano formata bloco multi-linha (ver `data-model.md` E2). Em `--json` emite objeto via `jsonOut`. 404 traduz para "Issue <KEY> não encontrada." com exitCode 4 (intercepta `JiraError.httpStatus === 404`). Depende T002, T006, stdin.resolveKeys
-- [ ] T013 [US2] Em `src/commands/root.ts`, registrar `getCommand` em `subCommands` (chave `get`)
+- [X] T012 [US2] Criar `src/commands/get.ts` exportando `getCommand`: aceita arg posicional opcional `key`; usa `resolveKeys` (RF-012) para combinar arg+stdin; itera Keys; para cada Key chama `validateKey` + `getIssue`. Em humano formata bloco multi-linha (ver `data-model.md` E2). Em `--json` emite objeto via `jsonOut`. 404 traduz para "Issue <KEY> não encontrada." com exitCode 4 (intercepta `JiraError.httpStatus === 404`). Depende T002, T006, stdin.resolveKeys
+- [X] T013 [US2] Em `src/commands/root.ts`, registrar `getCommand` em `subCommands` (chave `get`)
 
 **Checkpoint US2**: `jira get ABC-123` mostra detalhes; `echo ABC-123 | jira get` funciona; Key inválida sai com 2 sem chamar API.
 
@@ -105,12 +105,12 @@ description: "Task list for 002 — Consulta de Issues (jira-command)"
 
 ### Tests for User Story 3
 
-- [ ] T014 [P] [US3] Criar `tests/commands/find.test.ts` cobrindo: (a) tabela com colunas Key/Prioridade/Status/Responsável/Resumo, (b) `--limit 10` propaga para `searchIssues` (mock recebe `maxResults=10`), (c) `--limit` default 50, (d) JQL inválido → mensagem do servidor (RF-013 da 001) e exit 1, (e) sem resultados → "Nenhuma issue encontrada para o JQL informado.", (f) `--json` emite array
+- [X] T014 [P] [US3] Criar `tests/commands/find.test.ts` cobrindo: (a) tabela com colunas Key/Prioridade/Status/Responsável/Resumo, (b) `--limit 10` propaga para `searchIssues` (mock recebe `maxResults=10`), (c) `--limit` default 50, (d) JQL inválido → mensagem do servidor (RF-013 da 001) e exit 1, (e) sem resultados → "Nenhuma issue encontrada para o JQL informado.", (f) `--json` emite array
 
 ### Implementation for User Story 3
 
-- [ ] T015 [US3] Criar `src/commands/find.ts` com arg posicional `jql` (obrigatório) e `--limit` (number, default 50, validate 1..200). Chama `searchIssues` com `fields=summary,status,priority,assignee`. Saída humana usa `writeTable` com 5 colunas; `--json` emite array. Mensagem de "sem resultados" diferente da `mine`. Depende T006
-- [ ] T016 [US3] Em `src/commands/root.ts`, registrar `findCommand` em `subCommands` (chave `find`)
+- [X] T015 [US3] Criar `src/commands/find.ts` com arg posicional `jql` (obrigatório) e `--limit` (number, default 50, validate 1..200). Chama `searchIssues` com `fields=summary,status,priority,assignee`. Saída humana usa `writeTable` com 5 colunas; `--json` emite array. Mensagem de "sem resultados" diferente da `mine`. Depende T006
+- [X] T016 [US3] Em `src/commands/root.ts`, registrar `findCommand` em `subCommands` (chave `find`)
 
 **Checkpoint US3**: `jira find "project = X"` funciona; `--limit` respeita; JQL inválido propaga erro do servidor.
 
@@ -124,12 +124,12 @@ description: "Task list for 002 — Consulta de Issues (jira-command)"
 
 ### Tests for User Story 4
 
-- [ ] T017 [P] [US4] Criar `tests/commands/status.test.ts` cobrindo: (a) JQL gerado: `assignee = currentUser() AND status = "In Progress" ORDER BY updated DESC` (assert via mock — atenção: aspas no JQL para STATUS com espaço), (b) status sem matches → "Nenhuma issue com status \"<STATUS>\" encontrada.", (c) status com espaço (`"Code Review"`) gera JQL correto, (d) tabela: Key/Prioridade/Status/Resumo
+- [X] T017 [P] [US4] Criar `tests/commands/status.test.ts` cobrindo: (a) JQL gerado: `assignee = currentUser() AND status = "In Progress" ORDER BY updated DESC` (assert via mock — atenção: aspas no JQL para STATUS com espaço), (b) status sem matches → "Nenhuma issue com status \"<STATUS>\" encontrada.", (c) status com espaço (`"Code Review"`) gera JQL correto, (d) tabela: Key/Prioridade/Status/Resumo
 
 ### Implementation for User Story 4
 
-- [ ] T018 [US4] Criar `src/commands/status.ts` com arg posicional `status` (obrigatório). Constrói JQL com aspas duplas (escape `"` no STATUS via `JSON.stringify` ou substituição). Chama `searchIssues` com `fields=summary,status,priority`, `maxResults=50`. Saída humana via `writeTable`; `--json` emite array. Depende T006
-- [ ] T019 [US4] Em `src/commands/root.ts`, registrar `statusCommand` em `subCommands` (chave `status`)
+- [X] T018 [US4] Criar `src/commands/status.ts` com arg posicional `status` (obrigatório). Constrói JQL com aspas duplas (escape `"` no STATUS via `JSON.stringify` ou substituição). Chama `searchIssues` com `fields=summary,status,priority`, `maxResults=50`. Saída humana via `writeTable`; `--json` emite array. Depende T006
+- [X] T019 [US4] Em `src/commands/root.ts`, registrar `statusCommand` em `subCommands` (chave `status`)
 
 **Checkpoint US4**: `jira status "In Progress"` retorna minhas issues nesse estado.
 
@@ -143,14 +143,14 @@ description: "Task list for 002 — Consulta de Issues (jira-command)"
 
 ### Tests for User Story 5
 
-- [ ] T020 [P] [US5] Criar `tests/platform/browser.test.ts` cobrindo: (a) mock `child_process.spawn` (via `vi.mock('node:child_process')`) — em `os.platform()='win32'` chama `cmd /c start "" <url>`, (b) em `darwin` chama `open <url>`, (c) em `linux` chama `xdg-open <url>`, (d) spawn falha (ENOENT) → JiraError exitCode 6 com mensagem "Falha ao abrir browser"
-- [ ] T021 [P] [US5] Criar `src/platform/browser.ts` exportando `openInBrowser(url: string): Promise<void>`. Detecta `os.platform()` e usa `spawn` com `detached: true, stdio: 'ignore'` + `unref()` (fire-and-forget). Trata ENOENT lançando JiraError exitCode 6
-- [ ] T022 [P] [US5] Criar `tests/commands/open.test.ts` cobrindo: (a) saída humana: stderr `Abrindo <KEY> no navegador...`, exit 0, (b) `--json`: stdout `{"ok":true,"key":"<KEY>","action":"open"}` + exit 0 (RF-019 da 001), (c) Key inválida → exitCode 2, (d) pipe stdin processa múltiplas Keys, (e) URL construída: `<JIRA_BASE_URL>/browse/<KEY>`
+- [X] T020 [P] [US5] Criar `tests/platform/browser.test.ts` cobrindo: (a) mock `child_process.spawn` (via `vi.mock('node:child_process')`) — em `os.platform()='win32'` chama `cmd /c start "" <url>`, (b) em `darwin` chama `open <url>`, (c) em `linux` chama `xdg-open <url>`, (d) spawn falha (ENOENT) → JiraError exitCode 6 com mensagem "Falha ao abrir browser"
+- [X] T021 [P] [US5] Criar `src/platform/browser.ts` exportando `openInBrowser(url: string): Promise<void>`. Detecta `os.platform()` e usa `spawn` com `detached: true, stdio: 'ignore'` + `unref()` (fire-and-forget). Trata ENOENT lançando JiraError exitCode 6
+- [X] T022 [P] [US5] Criar `tests/commands/open.test.ts` cobrindo: (a) saída humana: stderr `Abrindo <KEY> no navegador...`, exit 0, (b) `--json`: stdout `{"ok":true,"key":"<KEY>","action":"open"}` + exit 0 (RF-019 da 001), (c) Key inválida → exitCode 2, (d) pipe stdin processa múltiplas Keys, (e) URL construída: `<JIRA_BASE_URL>/browse/<KEY>`
 
 ### Implementation for User Story 5
 
-- [ ] T023 [US5] Criar `src/commands/open.ts` com arg posicional opcional `key`. Usa `resolveKeys` (RF-012). Para cada Key: `validateKey` + `openInBrowser(`${baseUrl}/browse/${key}`)` + log apropriado conforme `--json` ou humano. Depende T002, T021, stdin.resolveKeys, config (apenas baseUrl)
-- [ ] T024 [US5] Em `src/commands/root.ts`, registrar `openCommand` em `subCommands` (chave `open`)
+- [X] T023 [US5] Criar `src/commands/open.ts` com arg posicional opcional `key`. Usa `resolveKeys` (RF-012). Para cada Key: `validateKey` + `openInBrowser(`${baseUrl}/browse/${key}`)` + log apropriado conforme `--json` ou humano. Depende T002, T021, stdin.resolveKeys, config (apenas baseUrl)
+- [X] T024 [US5] Em `src/commands/root.ts`, registrar `openCommand` em `subCommands` (chave `open`)
 
 **Checkpoint US5**: `jira open ABC-123` abre browser; `echo ABC-123 | jira open` funciona; `--json` envelope correto.
 
@@ -164,14 +164,14 @@ description: "Task list for 002 — Consulta de Issues (jira-command)"
 
 ### Tests for User Story 6
 
-- [ ] T025 [P] [US6] Criar `tests/platform/fzf.test.ts` cobrindo: (a) mock `spawn`: stdin recebe linhas, stdout retorna seleção → função retorna string trim, (b) spawn falha ENOENT → JiraError exitCode 1 com mensagem "fzf não encontrado..." + URL de instalação, (c) fzf retorna code 130 (ESC) → função retorna `null`, (d) fzf retorna code 0 com seleção vazia → `null`
-- [ ] T026 [P] [US6] Criar `src/platform/fzf.ts` exportando `pickWithFzf(lines: string[]): Promise<string | null>`. Spawn `fzf` com `stdio: ['pipe', 'pipe', 'inherit']`. Escreve `lines.join('\n')` em stdin, fecha. Coleta stdout. Em `close` event: code 130 ou 1 com stdout vazio → `null`; code 0 → trim e retorna; ENOENT → JiraError exitCode 1
-- [ ] T027 [P] [US6] Criar `tests/commands/pick.test.ts` cobrindo: (a) usa JQL default (idêntico ao `mine`), (b) `--jql` propaga JQL custom, (c) sem fzf → JiraError exitCode 1 (catch global emite mensagem RF-013 da 001), (d) ESC (pickWithFzf retorna null) → exit 1, sem stdout, (e) seleção válida → stdout = `<KEY>\n`, exit 0, (f) `searchIssues` chamado com `fields=summary,status,priority`, `maxResults=200`
+- [X] T025 [P] [US6] Criar `tests/platform/fzf.test.ts` cobrindo: (a) mock `spawn`: stdin recebe linhas, stdout retorna seleção → função retorna string trim, (b) spawn falha ENOENT → JiraError exitCode 1 com mensagem "fzf não encontrado..." + URL de instalação, (c) fzf retorna code 130 (ESC) → função retorna `null`, (d) fzf retorna code 0 com seleção vazia → `null`
+- [X] T026 [P] [US6] Criar `src/platform/fzf.ts` exportando `pickWithFzf(lines: string[]): Promise<string | null>`. Spawn `fzf` com `stdio: ['pipe', 'pipe', 'inherit']`. Escreve `lines.join('\n')` em stdin, fecha. Coleta stdout. Em `close` event: code 130 ou 1 com stdout vazio → `null`; code 0 → trim e retorna; ENOENT → JiraError exitCode 1
+- [X] T027 [P] [US6] Criar `tests/commands/pick.test.ts` cobrindo: (a) usa JQL default (idêntico ao `mine`), (b) `--jql` propaga JQL custom, (c) sem fzf → JiraError exitCode 1 (catch global emite mensagem RF-013 da 001), (d) ESC (pickWithFzf retorna null) → exit 1, sem stdout, (e) seleção válida → stdout = `<KEY>\n`, exit 0, (f) `searchIssues` chamado com `fields=summary,status,priority`, `maxResults=200`
 
 ### Implementation for User Story 6
 
-- [ ] T028 [US6] Criar `src/commands/pick.ts` com flag `--jql` opcional. Constrói linhas formatadas (`<KEY> [<STATUS>] <SUMMARY>`), chama `pickWithFzf`. Sucesso: extrai Key (primeiro token) via split + emite via `quietOut`. ESC: retorna exit 1 sem mensagem. Depende T026
-- [ ] T029 [US6] Em `src/commands/root.ts`, registrar `pickCommand` em `subCommands` (chave `pick`)
+- [X] T028 [US6] Criar `src/commands/pick.ts` com flag `--jql` opcional. Constrói linhas formatadas (`<KEY> [<STATUS>] <SUMMARY>`), chama `pickWithFzf`. Sucesso: extrai Key (primeiro token) via split + emite via `quietOut`. ESC: retorna exit 1 sem mensagem. Depende T026
+- [X] T029 [US6] Em `src/commands/root.ts`, registrar `pickCommand` em `subCommands` (chave `pick`)
 
 **Checkpoint US6**: `jira pick` lista issues no fzf; seleção emite Key; `jira pick | jira get` funciona.
 
@@ -179,11 +179,11 @@ description: "Task list for 002 — Consulta de Issues (jira-command)"
 
 ## Phase 9: Polish & Cross-Cutting
 
-- [ ] T030 [P] Atualizar `README.md` na raiz adicionando seção dos 6 comandos novos (mine/get/find/status/open/pick) com exemplo de uso e link para `specs/002-issue-browsing/`
-- [ ] T031 Rodar `npm run lint && npm run typecheck && npm run test && npm run build` localmente — TODOS devem passar
+- [X] T030 [P] Atualizar `README.md` na raiz adicionando seção dos 6 comandos novos (mine/get/find/status/open/pick) com exemplo de uso e link para `specs/002-issue-browsing/`
+- [X] T031 Rodar `npm run lint && npm run typecheck && npm run test && npm run build` localmente — TODOS devem passar
 - [ ] T032 Executar V1..V13 de `quickstart.md` em terminal real contra Jira
 - [ ] T033 Push branch `002-issue-browsing` + abrir PR para `master` + verificar workflow CI verde
-- [ ] T034 Avaliar `npx vitest run --coverage` — meta mínima 80% nos novos módulos: `src/jira/key.ts`, `src/jira/issues.ts`, `src/format/table.ts`, `src/platform/browser.ts`, `src/platform/fzf.ts`, `src/commands/mine.ts`, `src/commands/get.ts`, `src/commands/find.ts`, `src/commands/status.ts`, `src/commands/open.ts`, `src/commands/pick.ts`
+- [X] T034 Avaliar `npx vitest run --coverage` — meta mínima 80% nos novos módulos: `src/jira/key.ts`, `src/jira/issues.ts`, `src/format/table.ts`, `src/platform/browser.ts`, `src/platform/fzf.ts`, `src/commands/mine.ts`, `src/commands/get.ts`, `src/commands/find.ts`, `src/commands/status.ts`, `src/commands/open.ts`, `src/commands/pick.ts`
 
 ---
 

@@ -4,6 +4,8 @@ CLI Jira em TypeScript ESM. Substitui o script PowerShell `jira.ps1`. Conecta a 
 
 A feature **001 (Fundação)** entrega: configuração via env, autenticação Bearer, bypass SSL para servidores corporativos, ajuda global, saída humano/JSON/quiet, pipeline stdin, exit codes granulares, SIGINT limpo e o comando `jira me` para validar token.
 
+A feature **002 (Consulta de Issues)** entrega seis comandos de leitura: `mine`, `get`, `find`, `status`, `open`, `pick`.
+
 ## Requisitos
 
 - Node 22 LTS (recursos usados rodam em Node 20+, mas `engines` declara `>=22`).
@@ -48,6 +50,23 @@ jira <cmd> --help       # ajuda de subcomando
 jira me                 # valida token, exibe usuário autenticado
 jira me --json          # mesma info em JSON UTF-8 (ideal para scripts)
 ```
+
+### Consulta de issues (feature 002)
+
+```powershell
+jira mine                                    # minhas issues abertas (até 50, ordenadas)
+jira get ABC-123                             # detalhes + 10 comentários mais recentes
+jira find "project = ABC AND status = Open"  # busca livre via JQL
+jira find "project = ABC" --limit 10         # com limite
+jira status "In Progress"                    # minhas issues no status informado
+jira open ABC-123                            # abre <BASE>/browse/ABC-123 no browser
+jira pick                                    # picker interativo (requer fzf no PATH)
+jira pick --jql "project = ABC"              # picker com JQL custom
+jira pick | jira get                         # pipeline ergonômico
+echo ABC-123 | jira open                     # pipe stdin em comandos com <KEY>
+```
+
+`fzf` é dependência opcional — instale em https://github.com/junegunn/fzf para usar `jira pick`. Demais comandos funcionam sem ele.
 
 ## Pipeline
 
