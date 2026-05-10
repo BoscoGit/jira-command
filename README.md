@@ -8,6 +8,8 @@ A feature **002 (Consulta de Issues)** entrega seis comandos de leitura: `mine`,
 
 A feature **003 (Transições de Workflow)** entrega cinco comandos: `trans`, `start`, `done`, `stop`, `move`.
 
+A feature **004 (Atribuição e Edição)** entrega sete comandos: `assign`, `unassign`, `prio`, `summary`, `label`, `label-del`, `desc`.
+
 ## Requisitos
 
 - Node 22 LTS (recursos usados rodam em Node 20+, mas `engines` declara `>=22`).
@@ -91,6 +93,23 @@ $env:JIRA_PATTERN_START = "Custom Start Step"   # regex case-insensitive
 $env:JIRA_PATTERN_DONE  = "Closed|Cancelled"
 $env:JIRA_PATTERN_STOP  = "Backlog"
 ```
+
+### Atribuição e edição (feature 004)
+
+```powershell
+jira assign ABC-123                          # atribui a você (default = me)
+jira assign ABC-123 --user joao.silva        # atribui a outro
+jira assign ABC-123 --quiet                  # imprime só a Key (pipe-friendly)
+jira unassign ABC-123                        # remove responsável
+jira prio ABC-123 High                       # altera prioridade
+jira summary ABC-123 "Novo título"           # altera título
+jira label ABC-123 backend                   # adiciona label (preserva existentes)
+jira label-del ABC-123 backend               # remove label específica
+jira desc ABC-123                            # abre descrição em $EDITOR
+jira pick | jira assign --quiet | jira start # pipeline ergonômico
+```
+
+`jira desc` exige terminal interativo — em pipe falha com exit 2. Editor escolhido em ordem: `$EDITOR` → `$VISUAL` → `notepad.exe` (Windows) → `nano` com fallback `vi` (Linux/macOS). Sem mudança no editor → não envia PUT.
 
 ## Pipeline
 
