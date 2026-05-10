@@ -2,7 +2,13 @@ import { defineCommand, runCommand, showUsage } from 'citty';
 import { JiraError } from '../errors.js';
 import { getOutputMode, humanError, jsonOut, setOutputMode } from '../output.js';
 import { VERSION } from '../version.js';
+import { findCommand } from './find.js';
+import { getCommand } from './get.js';
 import { meCommand } from './me.js';
+import { mineCommand } from './mine.js';
+import { openCommand } from './open.js';
+import { pickCommand } from './pick.js';
+import { statusCommand } from './status.js';
 
 export const rootCommand = defineCommand({
   meta: {
@@ -30,6 +36,12 @@ export const rootCommand = defineCommand({
   // — evita que showUsage seja invocado depois de um subcomando bem-sucedido.
   subCommands: {
     me: meCommand,
+    mine: mineCommand,
+    get: getCommand,
+    find: findCommand,
+    status: statusCommand,
+    open: openCommand,
+    pick: pickCommand,
   },
 });
 
