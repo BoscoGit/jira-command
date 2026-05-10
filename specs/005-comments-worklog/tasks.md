@@ -29,7 +29,7 @@ description: "Task list for 005 — Comentários e Registro de Tempo (jira-comma
 
 ## Phase 1: Setup
 
-- [ ] T001 Rodar `npm install`, `npm run lint`, `npm run typecheck`, `npm run test` — esperado: 292 testes verdes (acumulado 001..004)
+- [X] T001 Rodar `npm install`, `npm run lint`, `npm run typecheck`, `npm run test` — esperado: 292 testes verdes (acumulado 001..004)
 
 ---
 
@@ -37,14 +37,14 @@ description: "Task list for 005 — Comentários e Registro de Tempo (jira-comma
 
 **Purpose**: helpers compartilhados (REST de comentários e worklog, preview, confirm prompt).
 
-- [ ] T002 [P] Criar `src/format/preview.ts` exportando `previewText(text: string, max: number): string` — retorna `text` quando `text.length <= max`, senão `text.slice(0, max - 3) + '...'`. Não despeja `...` quando o texto cabe (corrige bug do `jira.ps1`)
-- [ ] T003 [P] Criar `tests/format/preview.test.ts` cobrindo: (a) texto curto retorna como veio (sem `...`); (b) texto exatamente do tamanho `max` retorna sem `...`; (c) texto maior que `max` é truncado para `max-3` chars + `...`; (d) `max` <= 3 trunca direto para `max` chars sem `...`
-- [ ] T004 [P] Criar `src/jira/comments.ts` exportando: (a) `Comment` type (id, author, created, body); (b) `createComment(config, key, body): Promise<Comment>` que faz `POST /rest/api/2/issue/<key>/comment` com body `{ body }`, retorna comment criado (parseia 201); (c) `listComments(config, key, max=50): Promise<Comment[]>` que faz `GET /rest/api/2/issue/<key>/comment?maxResults=<N>&orderBy=-created`; (d) `deleteComment(config, key, commentId): Promise<void>` que faz `DELETE /rest/api/2/issue/<key>/comment/<id>` (204). Todos validam Key local
-- [ ] T005 [P] Criar `tests/jira/comments.test.ts` cobrindo: (a) `createComment` envia POST com body `{body}` e retorna Comment parseado; (b) `listComments` envia GET com `maxResults` e `orderBy=-created`, parseia `comments[]`; (c) `deleteComment` envia DELETE para URL correta + aceita 204 sem JSON parse; (d) Key inválida em todas três → exitCode 2 sem chamar fetch; (e) 404 propaga via mapHttpToError
-- [ ] T006 [P] Criar `src/jira/worklog.ts` exportando: (a) `Worklog` type (id, author, started, timeSpent, comment); (b) `createWorklog(config, key, timeSpent, comment?): Promise<Worklog>` que faz `POST /rest/api/2/issue/<key>/worklog` com body `{ timeSpent, comment? }` (omite `comment` se ausente/vazio), retorna worklog criado; (c) `listWorklog(config, key): Promise<Worklog[]>` que faz `GET /rest/api/2/issue/<key>/worklog`. Validam Key local
-- [ ] T007 [P] Criar `tests/jira/worklog.test.ts` cobrindo: (a) `createWorklog` sem comment envia body apenas com `{timeSpent}` (sem chave `comment`); (b) com comment envia ambos; (c) parseia 201; (d) `listWorklog` parseia `worklogs[]`; (e) Key inválida → exitCode 2 sem fetch
-- [ ] T008 [P] Criar `src/platform/prompt.ts` exportando `confirmInteractive(question: string): Promise<boolean>` — retorna `false` quando `!process.stdin.isTTY` ou `!process.stdout.isTTY`; senão escreve `question` em stderr e lê uma linha via `node:readline`, retorna `true` se resposta (após trim, lowercase) for `s` ou `y`. Expõe `setReadlineImplForTests` para mock
-- [ ] T009 [P] Criar `tests/platform/prompt.test.ts` cobrindo: (a) stdin TTY+stdout TTY+resposta "s" → true; (b) "S" → true; (c) "y"/"Y" → true; (d) "n"/"N"/"qualquer-outro" → false; (e) string vazia → false; (f) stdin não-TTY → false sem ler; (g) stdout não-TTY → false sem ler
+- [X] T002 [P] Criar `src/format/preview.ts` exportando `previewText(text: string, max: number): string` — retorna `text` quando `text.length <= max`, senão `text.slice(0, max - 3) + '...'`. Não despeja `...` quando o texto cabe (corrige bug do `jira.ps1`)
+- [X] T003 [P] Criar `tests/format/preview.test.ts` cobrindo: (a) texto curto retorna como veio (sem `...`); (b) texto exatamente do tamanho `max` retorna sem `...`; (c) texto maior que `max` é truncado para `max-3` chars + `...`; (d) `max` <= 3 trunca direto para `max` chars sem `...`
+- [X] T004 [P] Criar `src/jira/comments.ts` exportando: (a) `Comment` type (id, author, created, body); (b) `createComment(config, key, body): Promise<Comment>` que faz `POST /rest/api/2/issue/<key>/comment` com body `{ body }`, retorna comment criado (parseia 201); (c) `listComments(config, key, max=50): Promise<Comment[]>` que faz `GET /rest/api/2/issue/<key>/comment?maxResults=<N>&orderBy=-created`; (d) `deleteComment(config, key, commentId): Promise<void>` que faz `DELETE /rest/api/2/issue/<key>/comment/<id>` (204). Todos validam Key local
+- [X] T005 [P] Criar `tests/jira/comments.test.ts` cobrindo: (a) `createComment` envia POST com body `{body}` e retorna Comment parseado; (b) `listComments` envia GET com `maxResults` e `orderBy=-created`, parseia `comments[]`; (c) `deleteComment` envia DELETE para URL correta + aceita 204 sem JSON parse; (d) Key inválida em todas três → exitCode 2 sem chamar fetch; (e) 404 propaga via mapHttpToError
+- [X] T006 [P] Criar `src/jira/worklog.ts` exportando: (a) `Worklog` type (id, author, started, timeSpent, comment); (b) `createWorklog(config, key, timeSpent, comment?): Promise<Worklog>` que faz `POST /rest/api/2/issue/<key>/worklog` com body `{ timeSpent, comment? }` (omite `comment` se ausente/vazio), retorna worklog criado; (c) `listWorklog(config, key): Promise<Worklog[]>` que faz `GET /rest/api/2/issue/<key>/worklog`. Validam Key local
+- [X] T007 [P] Criar `tests/jira/worklog.test.ts` cobrindo: (a) `createWorklog` sem comment envia body apenas com `{timeSpent}` (sem chave `comment`); (b) com comment envia ambos; (c) parseia 201; (d) `listWorklog` parseia `worklogs[]`; (e) Key inválida → exitCode 2 sem fetch
+- [X] T008 [P] Criar `src/platform/prompt.ts` exportando `confirmInteractive(question: string): Promise<boolean>` — retorna `false` quando `!process.stdin.isTTY` ou `!process.stdout.isTTY`; senão escreve `question` em stderr e lê uma linha via `node:readline`, retorna `true` se resposta (após trim, lowercase) for `s` ou `y`. Expõe `setReadlineImplForTests` para mock
+- [X] T009 [P] Criar `tests/platform/prompt.test.ts` cobrindo: (a) stdin TTY+stdout TTY+resposta "s" → true; (b) "S" → true; (c) "y"/"Y" → true; (d) "n"/"N"/"qualquer-outro" → false; (e) string vazia → false; (f) stdin não-TTY → false sem ler; (g) stdout não-TTY → false sem ler
 
 **Checkpoint Phase 2**: `npm run typecheck` limpo; novos testes verdes.
 
@@ -58,12 +58,12 @@ description: "Task list for 005 — Comentários e Registro de Tempo (jira-comma
 
 ### Tests for US1
 
-- [ ] T010 [P] [US1] Criar `tests/commands/comment.test.ts` cobrindo: (a) `createComment(key, "<TEXTO>")` chamado, stderr `Comentário adicionado em <KEY> (#<id>).`, exit 0; (b) texto vazio → "O texto do comentário não pode ser vazio." + exit 2 sem chamar API; (c) texto só com espaços → idem; (d) `--json` envelope `{ok, key, action:'comment', commentId}`; (e) Key inválida → exit 2; (f) pipe stdin
+- [X] T010 [P] [US1] Criar `tests/commands/comment.test.ts` cobrindo: (a) `createComment(key, "<TEXTO>")` chamado, stderr `Comentário adicionado em <KEY> (#<id>).`, exit 0; (b) texto vazio → "O texto do comentário não pode ser vazio." + exit 2 sem chamar API; (c) texto só com espaços → idem; (d) `--json` envelope `{ok, key, action:'comment', commentId}`; (e) Key inválida → exit 2; (f) pipe stdin
 
 ### Implementation for US1
 
-- [ ] T011 [US1] Criar `src/commands/comment.ts` com 2 args posicionais — `key` opc + `text` obrig. Usa `resolveKeys`. Para cada Key: `validateKey` + valida texto não-vazio (após trim) → senão JiraError exitCode 2 mensagem específica + `createComment(config, key, text)` + log com `id` retornado. Depende T004
-- [ ] T012 [US1] Em `src/commands/root.ts`, registrar `commentCommand` (chave `comment`)
+- [X] T011 [US1] Criar `src/commands/comment.ts` com 2 args posicionais — `key` opc + `text` obrig. Usa `resolveKeys`. Para cada Key: `validateKey` + valida texto não-vazio (após trim) → senão JiraError exitCode 2 mensagem específica + `createComment(config, key, text)` + log com `id` retornado. Depende T004
+- [X] T012 [US1] Em `src/commands/root.ts`, registrar `commentCommand` (chave `comment`)
 
 ---
 
@@ -75,12 +75,12 @@ description: "Task list for 005 — Comentários e Registro de Tempo (jira-comma
 
 ### Tests for US2
 
-- [ ] T013 [P] [US2] Criar `tests/commands/log.test.ts` cobrindo: (a) `createWorklog(key, "1h 30m")` chamado sem comment, stderr `Worklog 1h 30m registrado em <KEY>.`, exit 0; (b) com 3o arg posicional → comment passado; (c) formato inválido (mock 400) → mensagem do servidor + exit 1; (d) `--json` envelope `{ok, key, action:'log', time, worklogId}`; (e) Key inválida → exit 2; (f) pipe stdin
+- [X] T013 [P] [US2] Criar `tests/commands/log.test.ts` cobrindo: (a) `createWorklog(key, "1h 30m")` chamado sem comment, stderr `Worklog 1h 30m registrado em <KEY>.`, exit 0; (b) com 3o arg posicional → comment passado; (c) formato inválido (mock 400) → mensagem do servidor + exit 1; (d) `--json` envelope `{ok, key, action:'log', time, worklogId}`; (e) Key inválida → exit 2; (f) pipe stdin
 
 ### Implementation for US2
 
-- [ ] T014 [US2] Criar `src/commands/log.ts` com 3 args posicionais — `key` opc + `time` obrig + `comment` opc. Usa `resolveKeys`. Para cada Key: `validateKey` + `createWorklog(config, key, time, comment)` + log. Depende T006
-- [ ] T015 [US2] Em `src/commands/root.ts`, registrar `logCommand` (chave `log`)
+- [X] T014 [US2] Criar `src/commands/log.ts` com 3 args posicionais — `key` opc + `time` obrig + `comment` opc. Usa `resolveKeys`. Para cada Key: `validateKey` + `createWorklog(config, key, time, comment)` + log. Depende T006
+- [X] T015 [US2] Em `src/commands/root.ts`, registrar `logCommand` (chave `log`)
 
 ---
 
@@ -92,12 +92,12 @@ description: "Task list for 005 — Comentários e Registro de Tempo (jira-comma
 
 ### Tests for US3
 
-- [ ] T016 [P] [US3] Criar `tests/commands/comments.test.ts` cobrindo: (a) tabela ID/AUTOR/DATA/COMENTÁRIO com preview 80 (assert via mock `listComments`); (b) sem comentários → "Nenhum comentário em <KEY>."; (c) `--json` array; (d) data formatada para 10 chars (substring ISO); (e) Key inválida → exit 2
+- [X] T016 [P] [US3] Criar `tests/commands/comments.test.ts` cobrindo: (a) tabela ID/AUTOR/DATA/COMENTÁRIO com preview 80 (assert via mock `listComments`); (b) sem comentários → "Nenhum comentário em <KEY>."; (c) `--json` array; (d) data formatada para 10 chars (substring ISO); (e) Key inválida → exit 2
 
 ### Implementation for US3
 
-- [ ] T017 [US3] Criar `src/commands/comments.ts` com arg posicional opc `key`. Usa `resolveKeys` + `validateKey` + `listComments(config, key, 50)`. Saída humana via `writeTable` com colunas ID/AUTOR/DATA/COMENTÁRIO; data trunca para 10 chars (`created.slice(0,10)`); body via `previewText(body, 80)`. `--json` emite array sem envelope. Depende T002, T004
-- [ ] T018 [US3] Em `src/commands/root.ts`, registrar `commentsCommand` (chave `comments`)
+- [X] T017 [US3] Criar `src/commands/comments.ts` com arg posicional opc `key`. Usa `resolveKeys` + `validateKey` + `listComments(config, key, 50)`. Saída humana via `writeTable` com colunas ID/AUTOR/DATA/COMENTÁRIO; data trunca para 10 chars (`created.slice(0,10)`); body via `previewText(body, 80)`. `--json` emite array sem envelope. Depende T002, T004
+- [X] T018 [US3] Em `src/commands/root.ts`, registrar `commentsCommand` (chave `comments`)
 
 ---
 
@@ -109,12 +109,12 @@ description: "Task list for 005 — Comentários e Registro de Tempo (jira-comma
 
 ### Tests for US4
 
-- [ ] T019 [P] [US4] Criar `tests/commands/logs.test.ts` cobrindo: (a) tabela ID/AUTOR/DATA/TEMPO/COMENTÁRIO com preview 60 (`comment` field); (b) sem worklogs → "Nenhum apontamento em <KEY>."; (c) `--json` array; (d) Key inválida → exit 2
+- [X] T019 [P] [US4] Criar `tests/commands/logs.test.ts` cobrindo: (a) tabela ID/AUTOR/DATA/TEMPO/COMENTÁRIO com preview 60 (`comment` field); (b) sem worklogs → "Nenhum apontamento em <KEY>."; (c) `--json` array; (d) Key inválida → exit 2
 
 ### Implementation for US4
 
-- [ ] T020 [US4] Criar `src/commands/logs.ts` com arg posicional opc `key`. Usa `resolveKeys` + `validateKey` + `listWorklog(config, key)`. Saída humana via `writeTable` com 5 colunas; `started` para 10 chars; `comment` via `previewText(comment, 60)`. `--json` array. Depende T002, T006
-- [ ] T021 [US4] Em `src/commands/root.ts`, registrar `logsCommand` (chave `logs`)
+- [X] T020 [US4] Criar `src/commands/logs.ts` com arg posicional opc `key`. Usa `resolveKeys` + `validateKey` + `listWorklog(config, key)`. Saída humana via `writeTable` com 5 colunas; `started` para 10 chars; `comment` via `previewText(comment, 60)`. `--json` array. Depende T002, T006
+- [X] T021 [US4] Em `src/commands/root.ts`, registrar `logsCommand` (chave `logs`)
 
 ---
 
@@ -126,22 +126,22 @@ description: "Task list for 005 — Comentários e Registro de Tempo (jira-comma
 
 ### Tests for US5
 
-- [ ] T022 [P] [US5] Criar `tests/commands/comment-del.test.ts` cobrindo: (a) `--yes` chama `deleteComment(key, id)` direto sem prompt + stderr `Comentário <ID> deletado.` + exit 0; (b) interativo (stdin+stdout TTY) com mock `confirmInteractive` retornando true → deleta + log; (c) interativo com confirm retornando false → "Operação cancelada." + exit 0, sem deleteComment; (d) modo não-interativo (stdin não-TTY) sem `--yes` → "Operação cancelada (modo não-interativo). Use --yes para confirmar." + exit 2 sem deleteComment; (e) `--json` envelope `{ok, key, action:'comment-del', commentId}`; (f) Key inválida → exit 2; (g) 403 mapeado para exit 5
+- [X] T022 [P] [US5] Criar `tests/commands/comment-del.test.ts` cobrindo: (a) `--yes` chama `deleteComment(key, id)` direto sem prompt + stderr `Comentário <ID> deletado.` + exit 0; (b) interativo (stdin+stdout TTY) com mock `confirmInteractive` retornando true → deleta + log; (c) interativo com confirm retornando false → "Operação cancelada." + exit 0, sem deleteComment; (d) modo não-interativo (stdin não-TTY) sem `--yes` → "Operação cancelada (modo não-interativo). Use --yes para confirmar." + exit 2 sem deleteComment; (e) `--json` envelope `{ok, key, action:'comment-del', commentId}`; (f) Key inválida → exit 2; (g) 403 mapeado para exit 5
 
 ### Implementation for US5
 
-- [ ] T023 [US5] Criar `src/commands/comment-del.ts` com 2 args posicionais — `key` opc + `id` obrig — e flag `--yes`. Usa `resolveKeys`. Para cada Key: `validateKey` + se `args.yes` pula confirm; senão se `!process.stdin.isTTY || !process.stdout.isTTY` → JiraError exitCode 2 mensagem RF; senão `confirmInteractive(...)` → false retorna "Operação cancelada." sem JiraError (exit 0); true → `deleteComment(config, key, id)` + log. Depende T004, T008
-- [ ] T024 [US5] Em `src/commands/root.ts`, registrar `commentDelCommand` (chave `comment-del`)
+- [X] T023 [US5] Criar `src/commands/comment-del.ts` com 2 args posicionais — `key` opc + `id` obrig — e flag `--yes`. Usa `resolveKeys`. Para cada Key: `validateKey` + se `args.yes` pula confirm; senão se `!process.stdin.isTTY || !process.stdout.isTTY` → JiraError exitCode 2 mensagem RF; senão `confirmInteractive(...)` → false retorna "Operação cancelada." sem JiraError (exit 0); true → `deleteComment(config, key, id)` + log. Depende T004, T008
+- [X] T024 [US5] Em `src/commands/root.ts`, registrar `commentDelCommand` (chave `comment-del`)
 
 ---
 
 ## Phase 8: Polish
 
-- [ ] T025 [P] Atualizar `README.md` com seção feature 005, exemplos dos 5 comandos, observação sobre `--yes`
-- [ ] T026 Rodar `npm run lint && npm run typecheck && npm run test && npm run build` — todos verdes
+- [X] T025 [P] Atualizar `README.md` com seção feature 005, exemplos dos 5 comandos, observação sobre `--yes`
+- [X] T026 Rodar `npm run lint && npm run typecheck && npm run test && npm run build` — todos verdes
 - [ ] T027 Executar V1..V13 de `quickstart.md` em terminal real (incluindo V4/V5/V6 confirm interativo)
 - [ ] T028 Push branch + abrir PR + verificar CI verde
-- [ ] T029 Avaliar `npx vitest run --coverage` — meta 80% nos novos módulos: `src/format/preview.ts`, `src/jira/comments.ts`, `src/jira/worklog.ts`, `src/platform/prompt.ts`, `src/commands/{comment,comments,comment-del,log,logs}.ts`
+- [X] T029 Avaliar `npx vitest run --coverage` — meta 80% nos novos módulos: `src/format/preview.ts`, `src/jira/comments.ts`, `src/jira/worklog.ts`, `src/platform/prompt.ts`, `src/commands/{comment,comments,comment-del,log,logs}.ts`
 
 ---
 
